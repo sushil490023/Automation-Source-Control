@@ -1,0 +1,7 @@
+{
+    "name": "Env1",
+    "runtime": {
+        "language": "PowerShell",
+        "version": "7.1"
+    }
+}
