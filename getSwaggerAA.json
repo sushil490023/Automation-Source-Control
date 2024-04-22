@@ -1,0 +1,392 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Swagger Petstore - OpenAPI 3.0",
+    "description": "",
+    "termsOfService": "http://swagger.io/terms/",
+    "contact": {
+      "email": "apiteam@swagger.io"
+    },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    },
+    "version": "1.0.11"
+  },
+  "externalDocs": {
+    "description": "Find out more about Swagger",
+    "url": "http://swagger.io"
+  },
+  "servers": [
+    {
+      "url": "https://management.azure.com"
+    }
+  ],
+  "tags": [],
+  "paths": {
+    "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}": {
+      "get": {
+        "tags": [
+          "AutomationAccount"
+        ],
+        "summary": "Find purchase order by ID",
+        "description": "For valid response try integer IDs with value <= 5 or > 10. Other values will generate exceptions.",
+        "operationId": "AutomationAccount_Get",
+        "parameters": [
+          {
+            "name": "subscriptionId",
+            "in": "path",
+            "required": true,
+            "x-ms-parameter-location": "method",
+            "description": "Name of an Azure Resource group.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "automationAccountName",
+            "in": "path",
+            "required": true,
+            "x-ms-parameter-location": "method",
+            "description": "Name of an Azure Resource group.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "resourceGroupName",
+            "in": "path",
+            "required": true,
+            "x-ms-parameter-location": "method",
+            "description": "Name of an Azure Resource group.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AutomationAccount"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid ID supplied"
+          },
+          "404": {
+            "description": "Order not found"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "AutomationAccount": {
+        "properties": {
+          "properties": {
+            "$ref": "#/components/schemas/AutomationAccountProperties"
+          },
+          "etag": {
+            "type": "string",
+            "description": "Gets or sets the etag of the resource."
+          },
+          "identity": {
+            "$ref": "#/components/schemas/Identity"
+          },
+          "systemData": {
+            "$ref": "#/components/schemas/systemData"
+          }
+        },
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/TrackedResource"
+          }
+        ],
+        "description": "Definition of the automation account type."
+      },
+      "AutomationAccountProperties": {
+        "properties": {
+          "sku": {
+            "$ref": "#/components/schemas/Sku"
+          },
+          "lastModifiedBy": {
+            "type": "string",
+            "description": "Gets or sets the last modified by."
+          },
+          "state": {
+            "type": "string",
+            "readOnly": true,
+            "description": "Gets status of account.",
+            "enum": [
+              "Ok",
+              "Unavailable",
+              "Suspended"
+            ],
+            "x-ms-enum": {
+              "name": "AutomationAccountState",
+              "modelAsString": true
+            }
+          },
+          "creationTime": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true,
+            "description": "Gets the creation time.",
+            "x-nullable": false
+          },
+          "lastModifiedTime": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true,
+            "description": "Gets the last modified time.",
+            "x-nullable": false
+          },
+          "description": {
+            "type": "string",
+            "description": "Gets or sets the description."
+          },
+          "encryption": {
+            "$ref": "#/components/schemas/EncryptionProperties"
+          },
+          "privateEndpointConnections": {
+            "type": "array",
+            "items": {
+              "$ref": "../../common/v1/definitions.json#/definitions/PrivateEndpointConnection"
+            },
+            "description": "List of Automation operations supported by the Automation resource provider."
+          },
+          "publicNetworkAccess": {
+            "type": "boolean",
+            "description": "Indicates whether traffic on the non-ARM endpoint (Webhook/Agent) is allowed from the public internet"
+          },
+          "disableLocalAuth": {
+            "type": "boolean",
+            "description": "Indicates whether requests using non-AAD authentication are blocked"
+          },
+          "automationHybridServiceUrl": {
+            "type": "string",
+            "description": "URL of automation hybrid service which is used for hybrid worker on-boarding."
+          }
+        },
+        "description": "Definition of the account property."
+      },
+      "Identity": {
+        "description": "Identity for the resource.",
+        "properties": {
+          "principalId": {
+            "readOnly": true,
+            "type": "string",
+            "description": "The principal ID of resource identity."
+          },
+          "tenantId": {
+            "readOnly": true,
+            "type": "string",
+            "description": "The tenant ID of resource."
+          },
+          "type": {
+            "type": "string",
+            "description": "The identity type.",
+            "enum": [
+              "SystemAssigned",
+              "UserAssigned",
+              "SystemAssigned, UserAssigned",
+              "None"
+            ],
+            "x-ms-enum": {
+              "name": "ResourceIdentityType",
+              "modelAsString": false
+            }
+          }
+        }
+      },
+      "Sku": {
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Gets or sets the SKU name of the account.",
+            "enum": [
+              "Free",
+              "Basic"
+            ],
+            "x-ms-enum": {
+              "name": "SkuNameEnum",
+              "modelAsString": true
+            }
+          },
+          "family": {
+            "type": "string",
+            "description": "Gets or sets the SKU family."
+          },
+          "capacity": {
+            "type": "integer",
+            "format": "int32",
+            "description": "Gets or sets the SKU capacity."
+          }
+        },
+        "required": [
+          "name"
+        ],
+        "description": "The account SKU."
+      },
+      "EncryptionProperties": {
+        "description": "The encryption settings for automation account",
+        "properties": {
+          "keyVaultProperties": {
+            "$ref": "#/components/schemas/KeyVaultProperties"
+          },
+          "keySource": {
+            "type": "string",
+            "description": "Encryption Key Source",
+            "enum": [
+              "Microsoft.Automation",
+              "Microsoft.Keyvault"
+            ],
+            "x-ms-enum": {
+              "name": "EncryptionKeySourceType",
+              "modelAsString": false
+            }
+          },
+          "identity": {
+            "description": "User identity used for CMK.",
+            "properties": {
+              "userAssignedIdentity": {
+                "type": "object",
+                "description": "The user identity used for CMK. It will be an ARM resource id in the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}'."
+              }
+            }
+          }
+        }
+      },
+      "KeyVaultProperties": {
+        "type": "object",
+        "description": "Settings concerning key vault encryption for a configuration store.",
+        "properties": {
+          "keyvaultUri": {
+            "description": "The URI of the key vault key used to encrypt data.",
+            "type": "string"
+          },
+          "keyName": {
+            "description": "The name of key used to encrypt data.",
+            "type": "string"
+          },
+          "keyVersion": {
+            "description": "The key version of the key used to encrypt data.",
+            "type": "string"
+          }
+        }
+      },
+      "systemData": {
+        "description": "Metadata pertaining to creation and last modification of the resource.",
+        "type": "object",
+        "readOnly": true,
+        "properties": {
+          "createdBy": {
+            "type": "string",
+            "description": "The identity that created the resource."
+          },
+          "createdByType": {
+            "type": "string",
+            "description": "The type of identity that created the resource.",
+            "enum": [
+              "User",
+              "Application",
+              "ManagedIdentity",
+              "Key"
+            ],
+            "x-ms-enum": {
+              "name": "createdByType",
+              "modelAsString": true
+            }
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "The timestamp of resource creation (UTC)."
+          },
+          "lastModifiedBy": {
+            "type": "string",
+            "description": "The identity that last modified the resource."
+          },
+          "lastModifiedByType": {
+            "type": "string",
+            "description": "The type of identity that last modified the resource.",
+            "enum": [
+              "User",
+              "Application",
+              "ManagedIdentity",
+              "Key"
+            ],
+            "x-ms-enum": {
+              "name": "createdByType",
+              "modelAsString": true
+            }
+          },
+          "lastModifiedAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "The timestamp of resource last modification (UTC)"
+          }
+        }
+      },
+      "TrackedResource": {
+        "description": "The resource model definition for a ARM tracked top level resource",
+        "type": "object",
+        "properties": {
+          "tags": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            },
+            "x-ms-mutability": [
+              "read",
+              "create",
+              "update"
+            ],
+            "description": "Resource tags."
+          },
+          "location": {
+            "type": "string",
+            "x-ms-mutability": [
+              "read",
+              "create"
+            ],
+            "description": "The Azure Region where the resource lives"
+          }
+        },
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/Resource"
+          }
+        ]
+      },
+      "Resource": {
+        "description": "The core properties of ARM resources",
+        "type": "object",
+        "properties": {
+          "id": {
+            "readOnly": true,
+            "type": "string",
+            "description": "Fully qualified resource Id for the resource"
+          },
+          "name": {
+            "readOnly": true,
+            "type": "string",
+            "description": "The name of the resource"
+          },
+          "type": {
+            "readOnly": true,
+            "type": "string",
+            "description": "The type of the resource."
+          }
+        },
+        "x-ms-azure-resource": true
+      }
+    }
+  }
+}
